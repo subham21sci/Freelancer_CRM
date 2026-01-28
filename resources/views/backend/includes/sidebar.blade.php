@@ -206,7 +206,7 @@
 
                     <img src="{{ auth()->user()->profile_photo_path
                         ? asset('storage/admin/' . auth()->user()->profile_photo_path)
-                        : asset('backassets/images/avatars/avatar-1.png') }}"
+                        : asset('backassets/images/subham-logo.svg') }}"
                         alt="Profile Image" height="50">
                     <div class="user-info">
                         <p class="user-name mb-0">{{ Auth::user()->name }}</p>
