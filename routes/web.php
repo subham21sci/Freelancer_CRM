@@ -1,7 +1,8 @@
 <?php
 
 use App\Http\Controllers\Admin\BlogController;
-use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\Catalog\CategoryController;
+use App\Http\Controllers\Admin\Catalog\TagController;
 use App\Http\Controllers\Admin\ClientsController;
 use App\Http\Controllers\Admin\ContactController;
 use App\Http\Controllers\Admin\DashboardController;
@@ -10,7 +11,7 @@ use App\Http\Controllers\Admin\FaqController;
 use App\Http\Controllers\Admin\PortfolioController;
 use App\Http\Controllers\Admin\ProjectController;
 use App\Http\Controllers\Admin\TestimonialsController;
-use App\Http\Controllers\Admin\TechnologyController;
+use App\Http\Controllers\Admin\Catalog\TechnologyController;
 
 use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
@@ -26,9 +27,6 @@ Route::middleware([
     config('jetstream.auth_session'),
     'verified',
 ])->group(function () {
-    // Route::get('/dashboard', function () {
-    //     return view('dashboard');
-    // })->name('dashboard');
 
     Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('admin.dashboard');
 
@@ -40,11 +38,31 @@ Route::middleware([
 
 
     //Start Category Route
-    Route::get('/admin/category-list', [CategoryController::class, 'index'])->name('admin.categoryList');
-    Route::post('/admin/category-store', [CategoryController::class, 'catStore'])->name('admin.catStore');
-    Route::post('/admin/update-category', [CategoryController::class, 'catUpdate'])->name('admin.catUpdate');
-    Route::post('/admin/delete-category/{id}', [CategoryController::class, 'catDestroy'])->name('admin.catDestroy');
+    Route::prefix('admin/category')->name('admin.category.')->group(function () {
+        Route::get('/list', [CategoryController::class, 'index'])->name('categoryList');
+        Route::post('/store', [CategoryController::class, 'catStore'])->name('catStore');
+        Route::post('/update-category', [CategoryController::class, 'catUpdate'])->name('catUpdate');
+        Route::post('/delete-category/{id}', [CategoryController::class, 'catDestroy'])->name('catDestroy');
+    });
     //End Category Route
+
+    //Start Technology  Route
+    Route::prefix('admin/technology')->name('admin.technology.')->group(function () {
+        Route::get('/list', [TechnologyController::class, 'index'])->name('technologyList');
+        Route::post('/store', [TechnologyController::class, 'technologyStore'])->name('technologyStore');
+        Route::post('/update-technology', [TechnologyController::class, 'technologyUpdate'])->name('technologyUpdate');
+        Route::post('/delete-technology/{id}', [TechnologyController::class, 'technologyDestroy'])->name('technologyDestroy');
+    });
+   //End Technology  Route
+
+    //Start Tags  Route
+    Route::prefix('admin/tags')->name('admin.tags.')->group(function () {
+        Route::get('/list', [TagController::class, 'index'])->name('tagList');
+        Route::post('/store', [TagController::class, 'tagStore'])->name('tagStore');
+        Route::post('/update-tags', [TagController::class, 'tagUpdate'])->name('tagUpdate');
+        Route::post('/delete-tags/{id}', [TagController::class, 'tagDestroy'])->name('tagDestroy');
+    });
+   //End Tags  Route
 
    //Start Blog Route
     Route::get('/admin/blog', [BlogController::class, 'index'])->name('admin.blogList');
@@ -72,15 +90,6 @@ Route::middleware([
     Route::get('/admin/project-quotation/{id}', [ProjectController::class, 'projectquotation'])->name('admin.projectquotation');
 
     //End project Route
-
- //Start Technology  Route
-     Route::get('/admin/technology-list', [TechnologyController::class, 'index'])->name('admin.technology');
-     Route::get('/admin/technology-add', [TechnologyController::class, 'technologyAdd'])->name('admin.technologydAdd');
-     Route::post('/admin/technology-store', [TechnologyController::class, 'technologyStore'])->name('admin.technologyStore');
-     Route::post('/admin/update-technology', [TechnologyController::class, 'technologyUpdate'])->name('admin.technologyUpdate');
-     Route::post('/admin/delete-technology/{id}', [TechnologyController::class, 'technologyDestroy'])->name('admin.technologyDestroy');
-     //End Technology  Route
-
 
     //Start client Route
     Route::prefix('admin/clients')->name('admin.clients.')->group(function () {

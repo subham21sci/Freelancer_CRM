@@ -2,7 +2,7 @@
     <div class="sidebar-header">
 
         <div>
-            <img src="{{ asset('backassets/images/favicon.svg') }}" style="height: 50px;" alt="logo icon">
+            <img src="{{ asset('assets/images/favicon.svg') }}" style="height: 50px;" alt="logo icon">
 
         </div>
         <div class="toggle-icon ms-auto"><i class='bx bx-arrow-back'></i>

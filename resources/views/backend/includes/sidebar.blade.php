@@ -15,14 +15,14 @@
             <div class="menu-title">Catalog</div>
         </a>
         <ul>
-            <li> <a href="{{ route('admin.categoryList') }}"
-                    class="{{ Request::routeIs('admin.categoryList') ? 'active' : '' }}"><i
+            <li> <a href="{{ route('admin.category.categoryList') }}"
+                    class="{{ Request::routeIs('admin.category.categoryList') ? 'active' : '' }}"><i
                         class='bx bx-radio-circle'></i>Category</a>
             </li>
 
-             <li> <a href="{{ route('admin.technology') }}" class="{{ Request::routeIs('admin.technology') ? 'active' : '' }}"><i class='bx bx-radio-circle'></i>Technologies</a>
+             <li> <a href="{{ route('admin.technology.technologyList') }}" class="{{ Request::routeIs('admin.technology.technologyList') ? 'active' : '' }}"><i class='bx bx-radio-circle'></i>Technologies</a>
             </li>
-            <li> <a href="#" class=""><i class='bx bx-radio-circle'></i>Tags</a>
+            <li> <a href="{{ route('admin.tags.tagList') }}" class="{{ Request::routeIs('admin.tags.tagList') ? 'active' : '' }}"><i class='bx bx-radio-circle'></i>Tags</a>
             </li>
         </ul>
     </li>
@@ -206,7 +206,7 @@
 
                     <img src="{{ auth()->user()->profile_photo_path
                         ? asset('storage/admin/' . auth()->user()->profile_photo_path)
-                        : asset('backassets/images/subham-logo.svg') }}"
+                        : asset('assets/images/subham-logo.svg') }}"
                         alt="Profile Image" height="50">
                     <div class="user-info">
                         <p class="user-name mb-0">{{ Auth::user()->name }}</p>

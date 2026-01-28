@@ -6,14 +6,14 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!--favicon-->
-    <link rel="icon" href="{{ asset('backassets/images/favicon.svg') }}" type="image/png" />
+    <link rel="icon" href="{{ asset('assets/images/favicon.svg') }}" type="image/png" />
     <!--plugins-->
     <!-- Bootstrap CSS -->
-    <link href="{{ asset('backassets/css/bootstrap.min.css') }}" rel="stylesheet">
-    <link href="{{ asset('backassets/css/bootstrap-extended.css')}}" rel="stylesheet">
+    <link href="{{ asset('assets/css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('assets/css/bootstrap-extended.css')}}" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&amp;display=swap" rel="stylesheet">
-    <link href="{{ asset('backassets/css/app.css') }}" rel="stylesheet">
-    <link href="{{ asset('backassets/css/icons.css') }}" rel="stylesheet">
+    <link href="{{ asset('assets/css/app.css') }}" rel="stylesheet">
+    <link href="{{ asset('assets/css/icons.css') }}" rel="stylesheet">
 
     <title>Login</title>
 </head>
@@ -29,7 +29,7 @@
                             <div class="card-body">
                                 <div class="p-4">
                                     <div class="mb-3 text-center">
-                                        <img src="{{ asset('backassets/images/favicon.svg') }}" width="150" alt="" />
+                                        <img src="{{ asset('assets/images/favicon.svg') }}" width="150" alt="" />
                                     </div>
                                     <div class="text-center mb-4">
                                         <p class="mb-0">Please log in to your account</p>
@@ -83,9 +83,9 @@
     </div>
     <!--end wrapper-->
     <!-- Bootstrap JS -->
-    <script src="{{ asset('backassets/js/bootstrap.bundle.min.js') }}"></script>
+    <script src="{{ asset('assets/js/bootstrap.bundle.min.js') }}"></script>
     <!--plugins-->
-    <script src="{{ asset('backassets/js/jquery.min.js') }}"></script>
+    <script src="{{ asset('assets/js/jquery.min.js') }}"></script>
 
     <!--Password show & hide js -->
     <script>
@@ -105,7 +105,7 @@
         });
     </script>
     <!--app JS-->
-    <script src="{{ asset('/backassets/js/app.js') }}"></script>
+    <script src="{{ asset('assets/js/app.js') }}"></script>
 </body>
 
 </html>
