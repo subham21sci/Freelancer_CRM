@@ -1,6 +1,6 @@
 @extends('backend.layout.master')
 @section('title', 'Client Edit')
-@section('css_Section')
+@section('css_section')
 @stop
 @section('content')
     <div class="page-wrapper">
@@ -116,11 +116,12 @@
                                             @enderror
                                         </div>
 
-                                        <!-- Submit Button -->
-                                        <div class="col-md-12 text-end">
-                                            <button type="submit" id="submitBtn"
-                                                class="btn btn-primary px-4">Update</button>
-
+                                       <div class="col-md-12 text-end">
+                                            <button class="btn btn-primary" type="submit" id="submitBtn">
+                                                <span class="spinner-border spinner-border-sm me-2 d-none" role="status"
+                                                    aria-hidden="true"></span>
+                                                <span class="btn-text">Update</span>
+                                            </button>
                                         </div>
 
                                     </div>
@@ -138,22 +139,18 @@
 @stop
 @section('js_section')
     <script>
-        $(document).ready(function() {
-            $('form').on('submit', function() {
-                var $form = $(this);
-                var $btn = $form.find('button[type=submit], #submitBtn').first();
+        $('form').on('submit', function(e) {
+            e.preventDefault();
+
+            var $btn = $('#submitBtn');
+
+            if ($(this)[0].checkValidity()) {
                 $btn.prop('disabled', true);
                 $btn.find('.spinner-border').removeClass('d-none');
-                // if there's a .btn-text inside the button, update it; otherwise change the text
-                var $btnText = $btn.find('.btn-text');
-                if ($btnText.length) {
-                    $btnText.text('Please wait...');
-                } else {
-                    $btn.contents().filter(function() {
-                        return this.nodeType === 3;
-                    }).first().replaceWith(' Please wait...');
-                }
-            });
+                $btn.find('.btn-text').text('Please wait...');
+
+                $(this).off('submit').submit();
+            }
         });
     </script>
 @endsection

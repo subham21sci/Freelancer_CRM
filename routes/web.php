@@ -64,17 +64,19 @@ Route::middleware([
     });
    //End Tags  Route
 
-   //Start Blog Route
-    Route::get('/admin/blog', [BlogController::class, 'index'])->name('admin.blogList');
-    Route::get('/admin/blog-add', [BlogController::class, 'blogCreate'])->name('admin.blogCreate');
-    Route::post('/admin/blog-store', [BlogController::class, 'blogStore'])->name('admin.blogStore');
-    Route::get('/admin/blog-edit/{id}', [BlogController::class, 'blogEdit'])->name('admin.blogEdit');
-    Route::post('/admin/update-blog/{id}', [BlogController::class, 'blogUpdate'])->name('admin.blogUpdate');
-    Route::post('/admin/delete-blog/{id}', [BlogController::class, 'blogDestroy'])->name('admin.blogDestroy');
+       //Start client Route
+    Route::prefix('admin/clients')->name('admin.clients.')->group(function () {
+        Route::get('/all', [ClientsController::class, 'index'])->name('clientsList');
+        Route::get('/add', [ClientsController::class, 'addClient'])->name('addClient');
+        Route::post('/store', [ClientsController::class, 'clientStore'])->name('clientStore');
+        Route::get('/edit/{id}', [ClientsController::class, 'clientEdit'])->name('clientEdit');
+        Route::put('/update/{id}', [ClientsController::class, 'clientUpdate'])->name('clientUpdate');
+        Route::post('/delete/{id}', [ClientsController::class, 'clientDestroy'])->name('clientDestroy');
+    });
+    //End client Route
 
-    //End Blog Route
 
-    //Start project Route
+        //Start project Route
     Route::prefix('admin/projects')->name('admin.projects.')->group(function () {
         Route::get('/all', [ProjectController::class, 'index'])->name('all');
         Route::get('/completed', [ProjectController::class, 'completed'])->name('completed');
@@ -91,27 +93,21 @@ Route::middleware([
 
     //End project Route
 
-    //Start client Route
-    Route::prefix('admin/clients')->name('admin.clients.')->group(function () {
-        Route::get('/all', [ClientsController::class, 'index'])->name('clientsList');
-        Route::get('/add', [ClientsController::class, 'addClient'])->name('addClient');
-        Route::post('/store', [ClientsController::class, 'clientStore'])->name('clientStore');
-        Route::get('/edit/{id}', [ClientsController::class, 'clientEdit'])->name('clientEdit');
-        Route::put('/update/{id}', [ClientsController::class, 'clientUpdate'])->name('clientUpdate');
-        Route::post('/delete/{id}', [ClientsController::class, 'clientDestroy'])->name('clientDestroy');
-    });
-    //End client Route
+   //Start Blog Route
+    Route::get('/admin/blog', [BlogController::class, 'index'])->name('admin.blogList');
+    Route::get('/admin/blog-add', [BlogController::class, 'blogCreate'])->name('admin.blogCreate');
+    Route::post('/admin/blog-store', [BlogController::class, 'blogStore'])->name('admin.blogStore');
+    Route::get('/admin/blog-edit/{id}', [BlogController::class, 'blogEdit'])->name('admin.blogEdit');
+    Route::post('/admin/update-blog/{id}', [BlogController::class, 'blogUpdate'])->name('admin.blogUpdate');
+    Route::post('/admin/delete-blog/{id}', [BlogController::class, 'blogDestroy'])->name('admin.blogDestroy');
 
-
-
+    //End Blog Route
 
     //Start portfolio Route
     Route::get('/admin/portfolio', [PortfolioController::class, 'index'])->name('admin.galleryList');
     Route::post('/admin/portfolio-store', [PortfolioController::class, 'gallStore'])->name('admin.gallStore');
     Route::post('/admin/delete-portfolio/{id}', [PortfolioController::class, 'galDestroy'])->name('admin.galDestroy');
-
-    //End gallery Route
-
+    //End portfolio Route
 
     //Start contact Route
     Route::get('/admin/contact-list', [ContactController::class, 'index'])->name('admin.contactList');

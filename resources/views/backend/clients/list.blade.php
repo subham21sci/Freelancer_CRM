@@ -1,6 +1,6 @@
 @extends('backend.layout.master')
 @section('title', 'Clients')
-@section('css_Section')
+@section('css_section')
 @stop
 @section('content')
 
@@ -73,7 +73,7 @@
                                     <th>Name</th>
                                     <th>Mobile</th>
                                     <th>Email</th>
-                                    <th>Date</th>
+                                    <th>Join Date</th>
                                     <th>Status</th>
                                     <th>Actions</th>
                                 </tr>
@@ -88,7 +88,7 @@
                                         <td>{{ $cat->name }}</td>
                                         <td>{{ $cat->mobile }} | {{ $cat->alternative_mobile }}</td>
                                         <td>{{ $cat->email }}</td>
-                                        <td>{{ date('d M y', strtotime($cat->jdate)) }}</td>
+                                        <td>{{ date('d M y', strtotime($cat->join_date)) }}</td>
 
                                         <td>
                                             @if ($cat->status == '1')

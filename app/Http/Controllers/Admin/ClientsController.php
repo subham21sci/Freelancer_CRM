@@ -5,19 +5,19 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Client;
 use Illuminate\Http\Request;
-use App\Helpers\Helper;
 
 class ClientsController extends Controller
 {
     public function index(Request $request)
-{
-    $clientData = Client::orderBy('id', 'desc')
-        ->filterByDate($request->date)
-        ->filterByStatus($request->status)
-        ->get();
+    {
+        $clientData = Client::orderBy('join_date', 'desc')
+            ->filterByDate($request->date)
+            ->filterByStatus($request->status)
+            ->get();
 
-    return view('backend.clients.list', compact('clientData'));
-}
+        return view('backend.clients.list', compact('clientData'));
+    }
+
     public function addClient()
     {
         return view('backend.clients.add');
@@ -32,14 +32,14 @@ class ClientsController extends Controller
             'email' => 'nullable|email|max:255',
             'description' => 'nullable|string',
             'status' => 'required',
-            'jdate' => 'required'
+            'jdate' => 'required',
         ], [
             'name.required' => 'Kindly enter name',
             'status.required' => 'Kindly Select status',
             'jdate.required' => 'Kindly Select Date',
         ]);
 
-        $cate = new Client();
+        $cate = new Client;
         $cate->name = $request->name;
         $cate->mobile = $request->mobile;
         $cate->email = $request->email;
@@ -57,7 +57,7 @@ class ClientsController extends Controller
     {
         $clientData = Client::find($id);
 
-        return view('backend.clients.edit',compact('clientData'));
+        return view('backend.clients.edit', compact('clientData'));
     }
 
     public function clientUpdate(Request $request, $id)
@@ -69,7 +69,7 @@ class ClientsController extends Controller
             'email' => 'nullable|email|max:255',
             'description' => 'nullable|string',
             'status' => 'required',
-            'jdate' => 'required'
+            'jdate' => 'required',
         ], [
             'name.required' => 'Kindly enter name',
             'status.required' => 'Kindly Select status',

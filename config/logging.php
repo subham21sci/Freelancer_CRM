@@ -54,7 +54,8 @@ return [
 
         'stack' => [
             'driver' => 'stack',
-            'channels' => explode(',', env('LOG_STACK', 'single')),
+            'channels' => ['daily'],
+            // 'channels' => explode(',', env('LOG_STACK', 'single')),
             'ignore_exceptions' => false,
         ],
 
@@ -126,6 +127,13 @@ return [
         'emergency' => [
             'path' => storage_path('logs/laravel.log'),
         ],
+
+        'project' => [
+    'driver' => 'daily',
+    'path' => storage_path('logs/project.log'),
+    'level' => 'error',
+    'days' => 14,
+],
 
     ],
 

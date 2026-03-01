@@ -1,6 +1,54 @@
 @extends('backend.layout.master')
 @section('title', 'Project Add')
-@section('css_Section')
+@section('css_section')
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <style>
+
+        .select2-container--default .select2-selection--multiple {
+            min-height: 38px;
+            border: 1px solid #ced4da;
+            border-radius: 0.375rem;
+            padding: 0.375rem 0.75rem;
+            background-color: #fff;
+        }
+        .select2-container--default.select2-container--focus .select2-selection--multiple {
+            border-color: #86b7fe;
+            box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+        }
+
+        .select2-container--default .select2-selection--multiple .select2-selection__choice {
+            background-color: #0d6efd;
+            border: 1px solid #0d6efd;
+            color: #fff;
+            border-radius: 0.25rem;
+            padding: 0 8px;
+            margin-top: 4px;
+            height: 24px;
+            line-height: 22px;
+        }
+        .select2-container--default .select2-selection--multiple .select2-selection__choice__remove {
+            color: #fff;
+            margin-right: 6px;
+        }
+
+        .select2-container .select2-search--inline .select2-search__field {
+            margin-top: 4px;
+            height: 24px;
+        }
+
+        .select2-container {
+            width: 100% !important;
+        }
+
+        .is-invalid + .select2-container .select2-selection {
+    border-color: #dc3545 !important;
+}
+
+.is-invalid + .select2-container--focus .select2-selection {
+    box-shadow: 0 0 0 0.25rem rgba(220,53,69,.25) !important;
+}
+
+    </style>
 @stop
 @section('content')
     <div class="page-wrapper">
@@ -35,15 +83,17 @@
                                 <div class="col-lg-12">
                                     <div class="row g-3 needs-validation" novalidate="">
 
-                                        <div class="col-4">
-                                            <label for="multiple-select-custom-field" class="form-label">Category <span
-                                                    class="text-danger">*</span></label>
-                                            <select class="form-select @error('category_id') is-invalid @enderror"
+                                        <div class="col-6">
+                                            <label for="category_id" class="form-label">
+                                                Category <span class="text-danger">*</span>
+                                            </label>
+                                            <select
+                                                class="form-select cat_select_single @error('category_id') is-invalid @enderror"
                                                 name="category_id" id="category_id">
                                                 <option value="">Choose Category...</option>
                                                 @foreach ($catData as $cat)
                                                     <option value="{{ $cat->id }}"
-                                                        @if (old('category_id') == $cat->id) selected @endif>
+                                                        {{ old('category_id') == $cat->id ? 'selected' : '' }}>
                                                         {{ $cat->name }}
                                                     </option>
                                                 @endforeach
@@ -54,10 +104,14 @@
                                                 </span>
                                             @enderror
                                         </div>
-                                         <div class="col-3">
-                                            <label for="multiple-select-custom-field" class="form-label">Client<span
+
+
+
+                                        <div class="col-5">
+                                            <label for="client_id" class="form-label">Client<span
                                                     class="text-danger">*</span></label>
-                                            <select class="form-select @error('client_id') is-invalid @enderror"
+                                            <select
+                                                class="form-select client_select_single @error('client_id') is-invalid @enderror"
                                                 name="client_id" id="client_id">
                                                 <option value="">Choose Client...</option>
                                                 @foreach ($clientData as $cli)
@@ -80,12 +134,19 @@
                                                 </a>
                                             </div>
                                         </div>
-                                        <div class="col-md-4">
-                                            <label for="compname" class="form-label">Client Alternative Name </label>
-                                            <input type="text"
-                                                class="form-control @error('project_name') is-invalid @enderror"
-                                                name="project_name">
-                                            @error('project_name')
+                                        <div class="col-6">
+                                            <label for="tags-select" class="form-label">Tags</label>
+                                            <select
+                                                class="tags-select2-multiple form-select @error('tags') is-invalid @enderror"
+                                                name="tags[]" id="tags-select" multiple="multiple">
+                                                @foreach ($tagData as $tags)
+                                                    <option value="{{ $tags->id }}"
+                                                        {{ collect(old('tags', []))->contains($tags->id) ? 'selected' : '' }}>
+                                                        {{ $tags->name }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
+                                            @error('tags')
                                                 <span class="invalid-feedback" role="alert">
                                                     <strong>{{ $message }}</strong>
                                                 </span>
@@ -94,7 +155,7 @@
                                         <div class="col-md-6">
                                             <label for="compname" class="form-label">Project Name <span
                                                     class="text-danger">*</span></label>
-                                            <input type="text"
+                                            <input type="text" value="{{ old('project_name') }}"
                                                 class="form-control @error('project_name') is-invalid @enderror"
                                                 name="project_name">
                                             @error('project_name')
@@ -105,7 +166,7 @@
                                         </div>
                                         <div class="col-md-6">
                                             <label for="compname" class="form-label">Domain / URL</label>
-                                            <input type="url" class="form-control @error('domain') is-invalid @enderror"
+                                            <input type="url" value="{{ old('domain') }}" class="form-control @error('domain') is-invalid @enderror"
                                                 name="domain">
                                             @error('domain')
                                                 <span class="invalid-feedback" role="alert">
@@ -114,20 +175,30 @@
                                             @enderror
                                         </div>
 
-                                        <div class="col-6">
+                                        <div class="col-3">
                                             <label for="multiple-select-custom-field" class="form-label">Status <span
                                                     class="text-danger">*</span></label>
                                             <select class="form-select @error('status') is-invalid @enderror" name="status"
                                                 id="status">
                                                 <option value="">Choose status...</option>
-                                                <option value="1">completed</option>
-                                                <option value="2">incomplete</option>
-                                                <option value="3">ongoing</option>
-                                                <option value="4">pipeline</option>
-                                                <option value="5">rejected</option>
-
+                                                <option value="pipeline" {{ old('status') == 'pipeline' ? 'selected' : '' }}>Pipeline</option>
+                                                <option value="ongoing" {{ old('status') == 'ongoing' ? 'selected' : '' }}>Ongoing</option>
+                                                <option value="completed" {{ old('status') == 'completed' ? 'selected' : '' }}>Completed</option>
+                                                <option value="maintenance" {{ old('status') == 'maintenance' ? 'selected' : '' }}>Maintenance</option>
+                                                <option value="rejected" {{ old('status') == 'rejected' ? 'selected' : '' }}>Rejected</option>
                                             </select>
                                             @error('status')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                            @enderror
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label for="compname" class="form-label">Start Date <span
+                                                    class="text-danger">*</span></label>
+                                            <input type="date" value="{{ old('start_date') }}" class="form-control @error('start_date') is-invalid @enderror"
+                                                name="start_date">
+                                            @error('start_date')
                                                 <span class="invalid-feedback" role="alert">
                                                     <strong>{{ $message }}</strong>
                                                 </span>
@@ -143,7 +214,11 @@
 
                                         <!-- Submit Button -->
                                         <div class="col-md-12 text-end">
-                                            <button type="submit" class="btn btn-primary px-4">Submit</button>
+                                             <button class="btn btn-primary" type="submit" id="submitBtn">
+                                                <span class="spinner-border spinner-border-sm me-2 d-none" role="status"
+                                                    aria-hidden="true"></span>
+                                                <span class="btn-text">Submit</span>
+                                            </button>
                                         </div>
 
                                     </div>
@@ -161,4 +236,34 @@
 @stop
 @section('js_section')
 
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script>
+        $(document).ready(function() {
+           $('.cat_select_single, .client_select_single').select2({
+    minimumResultsForSearch: 5,
+    width: '100%'
+});
+
+
+            $('.tags-select2-multiple').select2({
+                placeholder: "Select Tags",
+                width: '100%'
+            });
+
+        });
+$('#submitBtn').closest('form').on('submit', function(e) {
+            e.preventDefault();
+
+            var $btn = $('#submitBtn');
+
+            if ($(this)[0].checkValidity()) {
+                $btn.prop('disabled', true);
+                $btn.find('.spinner-border').removeClass('d-none');
+                $btn.find('.btn-text').text('Please wait...');
+
+                $(this).off('submit').submit();
+            }
+        });
+
+    </script>
 @endsection
